@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurs Reacta - Tydzien 1</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <style>
+        .App {
+            font-family: sans-serif;
+        }
+
+        .Timebox {
+            border: 1px solid gray;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .TimeboxEditor {
+            text-align: right;
+            border-radius: 5px;
+            border: 1px solid gray;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .input {
+            min-width: 60%;
+            margin-left: 20px;
+            font-size: 16px;;
+        }
+        
+        .button {
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .Clock {
+            color: orangered;
+        }
+
+        .ProgressBar {
+            border-radius: 5px;
+            border: 1px solid orangered;
+            margin-bottom: 20px;
+            height: 25px;
+            padding: 5px;
+        }
+
+        .ProgressBar > div {
+            height: 100%;
+            background-color: orangered;
+        }
+
+        .inactive {
+            filter: blur(2px) grayscale(1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Kurs Reacta - Tydzien 1</h1>
+    <hr>
+    <div class="App">
+        <div class="TimeboxEditor inactive">
+            <label for="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text"></label>
+            <label for="">Ile minut?<input disabled value="25" type="number"></label>
+            <button>Zacznij</button>
+        </div>
+        <div class="Timebox">
+            <h1>Uczę się skrótów klawiszowych</h1>
+            <h2 class="Clock">Pozostało 13:37</h2>
+            <div id="root">
+
+            </div>
+            <div class="ProgressBar">
+                <div style="width: 45%"></div>
+            </div>
+            <button disabled>Start</button>
+            <button>Stop</button>
+            <button>Pauza</button>
+            Liczba przerw: 2
+        </div>
+    </div>
+</body>
+<script src="script.js" type="text/javascript"></script>
+</html>
