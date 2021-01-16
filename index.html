@@ -6,6 +6,7 @@
     <title>Kurs Reacta - Tydzien 1</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
         .App {
             font-family: sans-serif;
@@ -60,9 +61,9 @@
     </style>
 </head>
 <body>
-    <div id="root">
-    </div>
-    <!-- <h1>Kurs Reacta - Tydzien 1</h1>
+    <!-- <div id="root">
+    </div> -->
+    <h1>Kurs Reacta - Tydzien 1</h1>
     <hr>
     <div class="App">
         <div class="TimeboxEditor inactive">
@@ -72,7 +73,6 @@
         </div>
         <div class="Timebox">
             <h1>Uczę się skrótów klawiszowych</h1>
-            <h2 class="Clock">Pozostało 13:37</h2>
             <div id="root">
 
             </div>
@@ -84,7 +84,17 @@
             <button>Pauza</button>
             Liczba przerw: 2
         </div>
-    </div> -->
+    </div>
 </body>
-<script src="script.js" type="text/javascript"></script>
+<!-- <script src="script.js" type="text/javascript"></script> -->
+<script type="text/babel">
+    const rootElement = document.querySelector('#root');
+    const element = (<Clock hours="5" minutes = "7" seconds = "3" miliseconds = "2"/>);
+
+    function Clock({hours, minutes, seconds, miliseconds}) {
+        return <h2 className="Clock">Pozostało {hours > 9 ? hours : "0" + hours}:{minutes > 9 ? minuets : "0" + minutes}:{seconds > 9 ? seconds : "0" + seconds}</h2>;
+    }
+
+    ReactDOM.render(element, rootElement);
+</script>
 </html>
