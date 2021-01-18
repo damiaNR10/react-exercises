@@ -65,24 +65,8 @@
     </div> -->
     <h1>Kurs Reacta - Tydzien 1</h1>
     <hr>
-    <div class="App">
-        <div class="TimeboxEditor inactive">
-            <label for="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text"></label>
-            <label for="">Ile minut?<input disabled value="25" type="number"></label>
-            <button>Zacznij</button>
-        </div>
-        <div class="Timebox">
-            <h1>Uczę się skrótów klawiszowych</h1>
-            <div id="root"></div>
-            <!-- <div class="ProgressBar">
-                <div style="width: 45%"></div>
-            </div> -->
-            <button disabled>Start</button>
-            <button>Stop</button>
-            <button>Pauza</button>
-            Liczba przerw: 2
-        </div>
-    </div>
+    <div class="App"></div>
+    <div id="root"></div>
 </body>
 <!-- <script src="script.js" type="text/javascript"></script> -->
 <script type="text/babel">
@@ -93,19 +77,52 @@
         return <h2 className="Clock">Pozostało {hours > 9 ? hours : "0" + hours}:{minutes > 9 ? minuets : "0" + minutes}:{seconds > 9 ? seconds : "0" + seconds}:{miliseconds > 9 ? miliseconds : "0" + miliseconds}</h2>;
     }
 
-    function ProgressBar({percent = "10", trackRemaining = false}) {
+    function ProgressBar({percent = "10", trackRemaining = "false"}) {
         return (            
             <div className="ProgressBar">
                 <div style={{
                     width: `${percent}%`, 
                     height: "20px",
-                    "margin-left": trackRemaining ? "auto" : "initial"
+                    "margin-left": trackRemaining == "true" ? "auto" : "initial"
                 }}></div>
             </div>
         );
     }
 
-    ReactDOM.render([<Clock />, <ProgressBar trackRemaining = "true"/>], document.querySelector('#root'));
+    function TimeboxEditor() {
+        return (
+            <div className="TimeboxEditor inactive">
+                <label for="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text" /></label><br />
+                <label for="">Ile minut?<input disabled value="25" type="number" /></label><br />
+                <button>Zacznij</button>
+            </div>
+        );
+    }
+
+    function Timebox() {
+        return (
+            <div className="Timebox">
+                <h1>Uczę się skrótów klawiszowych</h1>
+                <Clock />
+                <ProgressBar trackRemaining = "false" />
+                <button disabled>Start</button>
+                <button>Stop</button>
+                <button>Pauza</button>
+                Liczba przerw: 2
+            </div>
+        );
+    }
+
+    function App() {
+        return (    
+            <div className="App">
+                <TimeboxEditor />, 
+                <Timebox />
+            </div>
+        );
+    }
+
+    ReactDOM.render(<App />, document.querySelector('#root'));
     //ReactDOM.render(<ProgressBar />, document.querySelector('#root2'));
 
 </script>
