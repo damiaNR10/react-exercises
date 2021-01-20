@@ -83,7 +83,7 @@
                 <div style={{
                     width: `${percent}%`, 
                     height: "20px",
-                    "margin-left": trackRemaining == "true" ? "auto" : "initial"
+                    "marginLeft": trackRemaining == "true" ? "auto" : "initial"
                 }}></div>
             </div>
         );
@@ -92,25 +92,36 @@
     function TimeboxEditor() {
         return (
             <div className="TimeboxEditor inactive">
-                <label for="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text" /></label><br />
-                <label for="">Ile minut?<input disabled value="25" type="number" /></label><br />
+                <label htmlFor="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text" /></label><br />
+                <label htmlFor="">Ile minut?<input disabled value="25" type="number" /></label><br />
                 <button>Zacznij</button>
             </div>
         );
     }
 
-    function Timebox() {
-        return (
-            <div className="Timebox">
-                <h1>Uczę się skrótów klawiszowych</h1>
-                <Clock />
-                <ProgressBar trackRemaining = "false" />
-                <button disabled>Start</button>
-                <button>Stop</button>
-                <button>Pauza</button>
-                Liczba przerw: 2
-            </div>
-        );
+    class Timebox extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                isRunning: true,
+                isPaused: false,
+                pausesCount: 0
+            };
+        }
+        render() {
+            const {isRunning, isPaused, pausesCount} = this.state
+            return (
+                <div className="Timebox">
+                    <h1>Uczę się skrótów klawiszowych</h1>
+                    <Clock />
+                    <ProgressBar trackRemaining = "false" />
+                    <button disabled = {isRunning}>Start</button>
+                    <button disabled = {!isRunning}>Stop</button>
+                    <button disabled = {!isRunning}>{isPaused ? "Wznów" : "Pauzuj"}</button>
+                    Liczba przerw: {pausesCount}
+                </div>
+            );
+        }
     }
 
     function App() {
