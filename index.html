@@ -86,14 +86,32 @@
         );
     }
 
-    function TimeboxEditor() {
-        return (
-            <div className="TimeboxEditor inactive">
-                <label htmlFor="">Co robisz?<input disabled value="Uczę się skrótów klawiszowych" type="text" /></label><br />
-                <label htmlFor="">Ile minut?<input disabled value="25" type="number" /></label><br />
-                <button>Zacznij</button>
-            </div>
-        );
+    class TimeboxEditor extends React.Component {
+        state = {
+            title: "Uczę się czegoś",
+            totalTimeInMinutes: 7
+        }
+        handleTitleChange = (event) => {
+            this.setState({
+                title: event.target.value
+            });
+        }
+        handleTotalTimeInMinutesChange = (event) => {
+            this.setState({
+                totalTimeInMinutes: event.target.value
+            });
+        } 
+        render() {
+            const {title, totalTimeInMinutes} = this.state;
+            return (
+                <div className="TimeboxEditor">
+                    <label htmlFor="">Co robisz?<input disabled = {false} onChange={this.handleTitleChange} value={title} type="text" /></label><br />
+                    <label htmlFor="">Ile minut?<input disabled = {false} onChange={this.handleTotalTimeInMinutesChange} value={totalTimeInMinutes} type="number" /></label><br />
+                    <button disabled = {false} >Zacznij</button>
+                </div>
+            );
+        }
+
     }
 
     class Timebox extends React.Component {
