@@ -12,14 +12,21 @@
             font-family: sans-serif;
         }
 
-        .Timebox {
+        .CurrentTimebox {
             border: 1px solid gray;
             border-radius: 5px;
             padding: 20px;
             text-align: center;
         }
 
-        .TimeboxEditor {
+        .Timebox {
+            border-radius: 5px;
+            border: 1px solid gray;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        .TimeboxEditor, .TimeboxCreator {
             text-align: right;
             border-radius: 5px;
             border: 1px solid gray;
@@ -97,7 +104,7 @@
         );
     }
 
-    class Timebox extends React.Component {
+    class CurrentTimebox extends React.Component {
         constructor(props) {
             super(props);
             this.state = {
@@ -166,7 +173,7 @@
             const progressInPercent = (elapsedTimeInSeconds / totalTimeInSeconds) * 100;
 
             return (
-                <div className="Timebox">
+                <div className={`CurrentTimebox ${isEditable ? "inactive" : ""}`}>
                     <h1>{title}</h1>
                     <Clock minutes = {minutesLeft} seconds = {secondsLeft} className = {isPaused ? "inactive" : ""} />
                     <ProgressBar percent = {progressInPercent} trackRemaining = "false"  className = {isPaused ? "inactive" : ""} />
@@ -217,7 +224,7 @@
                         onTitleChange = {this.handleTitleChange}
                         onTotalTimeInMinutesChange = {this.handleTotalTimeInMinutesChange}
                     />
-                    <Timebox 
+                    <CurrentTimebox 
                     isEditable = {isEditable}
                     title = {title} 
                     totalTimeInMinutes = {totalTimeInMinutes}
@@ -227,16 +234,54 @@
         }
     }
 
+    function TimeboxCreator(props) {
+        return (
+            <div className="TimeboxCreator">
+                <label htmlFor="">Co robisz?<input type="text" /></label><br />
+                <label htmlFor="">Ile minut?<input type="number" /></label><br />
+                <button>Dodaj Timebox</button>
+            </div>
+        );
+    }
+
+    class TimeboxList extends React.Component {
+        state = {
+            timeboxes: [
+                {title: "Uczę się A", totalTimeInMinutes: "5"}, 
+                {title: "Uczę się B", totalTimeInMinutes: "10"},
+                {title: "Uczę się C", totalTimeInMinutes: "15"}
+            ]
+        }
+
+        render() {
+            return(
+                <>
+                <TimeboxCreator />
+                {this.state.timeboxes.map((timebox, index) => 
+                    <Timebox key = {index}title = {timebox.title} totalTimeInMinutes = {timebox.totalTimeInMinutes} />
+                )}
+                </>
+            )
+        }
+    }
+
+    function Timebox({title, totalTimeInMinutes}) {
+        return(
+            <div className="Timebox">
+                <h3>{title} - {totalTimeInMinutes} min</h3>
+            </div>
+        )
+    }
+
     function App() {
         return (    
             <div className="App">
-                <EditableTimebox />
+                <TimeboxList />
             </div>
         );
     }
 
     ReactDOM.render(<App />, document.querySelector('#root'));
-    //ReactDOM.render(<ProgressBar />, document.querySelector('#root2'));
 
 </script>
 </html>
