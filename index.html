@@ -234,12 +234,12 @@
         }
     }
 
-    function TimeboxCreator(props) {
+    function TimeboxCreator({onCreate}) {
         return (
             <div className="TimeboxCreator">
                 <label htmlFor="">Co robisz?<input type="text" /></label><br />
                 <label htmlFor="">Ile minut?<input type="number" /></label><br />
-                <button>Dodaj Timebox</button>
+                <button onClick = {onCreate}>Dodaj Timebox</button>
             </div>
         );
     }
@@ -253,22 +253,59 @@
             ]
         }
 
+        addTimebox = (timebox) => {
+            this.setState(prevState => {
+                const timeboxes = [...prevState.timeboxes, timebox];
+                return {timeboxes};
+            })
+        }
+
+        removeTimebox = (indexToRemove) => {
+            this.setState(prevState => {
+                const timeboxes = prevState.timeboxes.filter((timebox, index) => index !== indexToRemove);
+                return {timeboxes};
+            })        
+        }
+
+        updateTimebox = (indexToUpdate, updatedTimebox) => {
+            this.setState(prevState => {
+                const timeboxes = prevState.timeboxes.map((timebox, index) => 
+                    index === indexToUpdate ? updatedTimebox : timebox
+                );
+                return {timeboxes};
+            })   
+        }
+
+        handleCreate = () => {
+            this.addTimebox({title: "Tytuł timeboxa", totalTimeInMinutes: "99"});
+        }
+
         render() {
             return(
                 <>
-                <TimeboxCreator />
-                {this.state.timeboxes.map((timebox, index) => 
-                    <Timebox key = {index}title = {timebox.title} totalTimeInMinutes = {timebox.totalTimeInMinutes} />
+                <TimeboxCreator onCreate = {this.handleCreate}/>
+                {this.state.timeboxes.map((timebox, index) => (
+                    <Timebox 
+                    key = {index} 
+                    title = {timebox.title} 
+                    totalTimeInMinutes = {timebox.totalTimeInMinutes} 
+                    onDelete = {() => this.removeTimebox(index)}
+                    onEdit = {() => this.updateTimebox(index, {...timebox, title: "Tytul po zmianie"})}
+                    // onEdit = {() => this.updateTimebox(index, {title: "Tytul po zmianie", totalTimeInMinutes: "5"})}
+                    />
+                )
                 )}
                 </>
             )
         }
     }
 
-    function Timebox({title, totalTimeInMinutes}) {
+    function Timebox({title, totalTimeInMinutes, onDelete, onEdit}) {
         return(
             <div className="Timebox">
                 <h3>{title} - {totalTimeInMinutes} min</h3>
+                <button onClick = {onDelete}>Usuń</button>
+                <button onClick = {onEdit}>Zmień</button>
             </div>
         )
     }
