@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <style>
         .App {
             font-family: sans-serif;
@@ -247,9 +248,9 @@
     class TimeboxList extends React.Component {
         state = {
             timeboxes: [
-                {title: "Uczę się A", totalTimeInMinutes: "5"}, 
-                {title: "Uczę się B", totalTimeInMinutes: "10"},
-                {title: "Uczę się C", totalTimeInMinutes: "15"}
+                {id: "aa", title: "Uczę się A", totalTimeInMinutes: "5"}, 
+                {id: "bb", title: "Uczę się B", totalTimeInMinutes: "10"},
+                {id: "cc", title: "Uczę się C", totalTimeInMinutes: "15"}
             ]
         }
 
@@ -277,7 +278,7 @@
         }
 
         handleCreate = () => {
-            this.addTimebox({title: "Tytuł timeboxa", totalTimeInMinutes: "99"});
+            this.addTimebox({id: uuid.v4(),title: "Tytuł timeboxa", totalTimeInMinutes: "99"});
         }
 
         render() {
@@ -286,7 +287,7 @@
                 <TimeboxCreator onCreate = {this.handleCreate}/>
                 {this.state.timeboxes.map((timebox, index) => (
                     <Timebox 
-                    key = {index} 
+                    key = {timebox.id} 
                     title = {timebox.title} 
                     totalTimeInMinutes = {timebox.totalTimeInMinutes} 
                     onDelete = {() => this.removeTimebox(index)}
@@ -306,6 +307,7 @@
                 <h3>{title} - {totalTimeInMinutes} min</h3>
                 <button onClick = {onDelete}>Usuń</button>
                 <button onClick = {onEdit}>Zmień</button>
+                <input />
             </div>
         )
     }
