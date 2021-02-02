@@ -235,14 +235,61 @@
         }
     }
 
-    function TimeboxCreator({onCreate}) {
-        return (
-            <div className="TimeboxCreator">
-                <label htmlFor="">Co robisz?<input type="text" /></label><br />
-                <label htmlFor="">Ile minut?<input type="number" /></label><br />
-                <button onClick = {onCreate}>Dodaj Timebox</button>
-            </div>
-        );
+    class TimeboxCreator extends React.Component {
+
+        //Obsługa formularzy 1:
+        // state = {
+        //     title: "",
+        //     totalTimeInMinutes: ""
+        // }
+
+        // handleTitleChange = () => {
+        //     this.setState({title: event.target.value});
+        // }
+
+        // handleTotalTimeInMinutesChange = () => {
+        //     this.setState({totalTimeInMinutes: event.target.value});
+        // }
+
+        //Obsługa formularzy 2:
+        constructor(props) {
+            super(props);
+            this.titleInput = React.createRef();
+            this.totalTimeInMinutesInput = React.createRef();
+        }
+
+        handleSubmit = (event) => {
+            event.preventDefault();
+            this.props.onCreate({
+                id: uuid.v4(),
+                title: this.titleInput.current.value, 
+                totalTimeInMinutes: this.totalTimeInMinutesInput.current.value
+            });
+            this.titleInput.current.value = "";
+            this.totalTimeInMinutesInput.current.value = "";
+        }
+
+        //Obłusga formularzy 1 cd:
+        // render() {
+        //     return (
+        //         <form onSubmit = {this.handleSubmit} className="TimeboxCreator">
+        //             <label htmlFor="">Co robisz?<input onChange = {this.handleTitleChange} type="text" value = {this.state.title} /></label><br />
+        //             <label htmlFor="">Ile minut?<input onChange = {this.handleTotalTimeInMinutesChange} type="number" value = {this.state.totalTimeInMinutes} /></label><br />
+        //             <button>Dodaj Timebox</button>
+        //         </form>
+        //     );
+        // }
+
+        //Obłusga formularzy 2 cd:
+        render() {
+            return (
+                <form onSubmit = {this.handleSubmit} className="TimeboxCreator">
+                    <label htmlFor="">Co robisz?<input type="text" ref = {this.titleInput} /></label><br />
+                    <label htmlFor="">Ile minut?<input type="number" ref = {this.totalTimeInMinutesInput} /></label><br />
+                    <button>Dodaj Timebox</button>
+                </form>
+            );
+        }
     }
 
     class TimeboxList extends React.Component {
@@ -277,8 +324,8 @@
             })   
         }
 
-        handleCreate = () => {
-            this.addTimebox({id: uuid.v4(),title: "Tytuł timeboxa", totalTimeInMinutes: "99"});
+        handleCreate = (createdTimebox) => {
+            this.addTimebox(createdTimebox);
         }
 
         render() {
